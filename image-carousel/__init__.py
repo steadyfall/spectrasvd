@@ -3,7 +3,7 @@ import streamlit.components.v1 as components
 
 def main():
 
-    imageCarouselComponent = components.declare_component("image-carousel-component", path="frontend/public")
+    imageCarouselComponent = components.declare_component("image-carousel-component", path="image-carousel/frontend/public")
 
     imageUrls = [
         "https://images.unsplash.com/photo-1522093007474-d86e9bf7ba6f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=764&q=80",
