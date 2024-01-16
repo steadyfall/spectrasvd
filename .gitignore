@@ -1,8 +1,10 @@
 # python
-venv/*
-__pycache__/*
+venv
+__pycache__
 
-# dependencies
+ideas.txt
+
+# dependencies  
 image-carousel/frontend/node_modules/*
 image-carousel/frontend/.pnp
 image-carousel/frontend/.pnp.js
