@@ -1,5 +1,7 @@
 from PIL import Image
 import numpy as np, os
+import requests
+from io import BytesIO
 
 import typing as typ
 from collections.abc import Callable
@@ -13,8 +15,13 @@ def minLength(imageObj: str | Image.Image) -> int | None:
     and less repeated code.
     '''
     if isinstance(imageObj, str):
-        imageObj = Image.open(imageObj).convert('L') if os.path.isfile(imageObj) else None
-    if not isinstance(imageObj, Image.Image):
+        if imageObj.startswith("https://"):
+            imageObj = Image.open(BytesIO(requests.get(imageObj).content))
+        elif os.path.isfile(imageObj):
+            imageObj = Image.open(imageObj).convert('L') if os.path.isfile(imageObj) else None
+        else:
+            return None
+    elif not isinstance(imageObj, Image.Image):
         return None
     width, height = imageObj.size
     maxRank = min((width, height))
@@ -107,9 +114,12 @@ def grayScaleImageCompression(
     Returns an AbstractImageCompressor object for 
     compressing images in grayscale using SVD.
     '''
-    if not os.path.isfile(imagePath):
+    if imagePath.startswith("https://"):
+        im = Image.open(BytesIO(requests.get(imagePath).content)).convert('L')
+    elif os.path.isfile(imagePath):
+        im = Image.open(imagePath).convert('L')
+    else:
         return lambda _: None
-    im = Image.open(imagePath).convert('L')
     return singleChannelImageCompressor(im)
 
 def RGBImageCompression(
@@ -119,8 +129,11 @@ def RGBImageCompression(
     Returns an AbstractImageCompressor object for 
     compressing images in grayscale using SVD.
     '''
-    if not os.path.isfile(imagePath):
+    if imagePath.startswith("https://"):
+        im = Image.open(BytesIO(requests.get(imagePath).content))
+    elif os.path.isfile(imagePath):
+        im = Image.open(imagePath)
+    else:
         return lambda _: None
-    im = Image.open(imagePath)
     return multiChannelImageCompressor(im)
 
