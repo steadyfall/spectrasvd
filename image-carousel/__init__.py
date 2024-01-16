@@ -25,7 +25,8 @@ def main():
     selectedImageUrl = imageCarouselComponent(imageUrls=imageUrls, height=200)
 
     if selectedImageUrl is not None:
-        st.image(selectedImageUrl)
+        # st.image(selectedImageUrl)
+        pass
 
 if __name__ == "__main__":
     main()
