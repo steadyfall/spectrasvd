@@ -43,7 +43,7 @@ def singleChannelImageCompressor(singleChannelImg: Image.Image) -> np.ndarray:
     rank = S.shape[0]
     assert rank <= maxRank
 
-    def rank_k_approx(rank_k: int):
+    def rank_k_approx(rank_k: int) -> np.ndarray:
         '''
         Rank-k approximation of a given matrix (in this case, a single-channel 
         image represented as a matrix).
@@ -75,7 +75,7 @@ def multiChannelImageCompressor(multiChannelImg: Image.Image) -> np.ndarray:
         )
         for chnl in multiChannelImg.getbands()
     )
-    def rank_k_approx(rank_k: int):
+    def rank_k_approx(rank_k: int) -> np.ndarray:
         '''
         Rank-k approximation of multiple matrices combined to give a
         `np.ndarray` object with depth >= 1, created using `np.dstack()`.
@@ -97,6 +97,10 @@ def multiChannelImageCompressor(multiChannelImg: Image.Image) -> np.ndarray:
     return rank_k_approx
 
 def singularValues(imageObj: Image.Image) -> np.array:
+    '''
+    Returns all the singular values returned from doing 
+    SVD on the matrix given by the image.
+    '''
     if not (
         isinstance(imageObj, Image.Image) 
     ):
